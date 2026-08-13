@@ -13,6 +13,7 @@ const AUTH_FILE = path.join(
   "mcp-auth.json",
 );
 const DRIVE_API = "https://www.googleapis.com/drive/v3";
+const UPLOAD_API = "https://www.googleapis.com/upload/drive/v3";
 const TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
 const SCOPE_KEY = "drive";
 const TOKEN_BUFFER_SECONDS = 120;
@@ -126,7 +127,8 @@ async function getToken() {
 async function driveFetch(pathWithQuery, options = {}) {
   const doFetch = async () => {
     const token = await getToken();
-    return fetch(`${DRIVE_API}${pathWithQuery}`, {
+    const base = options.upload ? UPLOAD_API : DRIVE_API;
+    return fetch(`${base}${pathWithQuery}`, {
       method: options.method || "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -488,6 +490,7 @@ server.registerTool(
     });
     const data = await driveFetch(`/files?${params.toString()}`, {
       method: "POST",
+      upload: true,
       body,
     });
     return { content: [{ type: "text", text: JSON.stringify(toFile(data)) }] };
@@ -526,4 +529,4 @@ server.registerTool(
 );
 
 const transport = new StdioServerTransport();
-u;
+await server.connect(transport);
