@@ -1,0 +1,13 @@
+{
+  "mcp": {
+    "headroom": {
+      "type": "local",
+      "command": [
+        "/Users/racso/.pyenv/versions/3.10.20/bin/headroom",
+        "mcp",
+        "serve"
+      ],
+      "enabled": true
+    }
+  }
+}

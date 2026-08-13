@@ -1,0 +1,57 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "drive": {
+      "type": "remote",
+      "url": "https://drivemcp.googleapis.com/mcp/v1",
+      "oauth": {
+        "clientId": "{env:GOOGLE_DRIVE_MCP_CLIENT_ID}",
+        "clientSecret": "{env:GOOGLE_DRIVE_MCP_CLIENT_SECRET}"
+      },
+      "enabled": false
+    },
+    "drive-local": {
+      "type": "local",
+      "command": ["node", "/Users/racso/.config/opencode/drive-local/server.mjs"],
+      "enabled": true
+    },
+    "mcp-server-linkedin": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-linkedin@latest"]
+    },
+    "headroom": {
+      "type": "local",
+      "command": [
+        "/Users/racso/.pyenv/versions/3.10.20/bin/headroom",
+        "mcp",
+        "serve"
+      ],
+      "enabled": true
+    },
+    "serena": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena",
+        "start-mcp-server",
+        "--project-from-cwd",
+        "--context",
+        "opencode",
+        "--open-web-dashboard",
+        "False"
+      ],
+      "enabled": true
+    }
+  },
+  "provider": {
+    "headroom": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Headroom Proxy",
+      "options": {
+        "baseURL": "http://127.0.0.1:8787/v1"
+      }
+    }
+  }
+}
