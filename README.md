@@ -20,17 +20,20 @@ A team of subagents orchestrated by a main agent for hands-on software work.
 
 - **`orchestrator`** (`agents/orchestrator.md`) — primary mode
   The accountable lead for a software task. It receives the request and
-  delegates planning, design review, implementation, testing, and code-style
-  review to the subagents, coordinating the pipeline and verifying results.
-  Selectable in the agent picker; optionally set as `default_agent` in
-  `opencode.json`.
+  delegates SDD creation, design review, implementation, testing, code-style
+  review, and SDD finalization to the subagents, with human-in-the-loop
+  checkpoints after SDD creation, testing, and final verification. Selectable
+  in the agent picker; optionally set as `default_agent` in `opencode.json`.
 
 ### Subagents
 
-- **`planner`** (`agents/planner.md`)
-  Breaks ambiguous feature requests and bug fixes into executable, prioritized
-  implementation plans: requirements, approach, task list with dependencies, and
-  per-task verification steps.
+- **`sdd-author`** (`agents/sdd-author.md`)
+  Authors the Software Design Document that drives the entire pipeline. At
+  Stage 1, explores the codebase and produces the initial SDD (replacing the
+  traditional planner): requirements, approach, task list with dependencies,
+  per-task verification steps, and a decision log. At Stage 7, finalizes the
+  SDD with implementation, test, and review results, producing a durable proof
+  artifact.
 
 - **`backend-designer`** (`agents/backend-designer.md`)
   Designs backend architecture, data models, and API contracts against the
@@ -43,7 +46,7 @@ A team of subagents orchestrated by a main agent for hands-on software work.
   existing interfaces for conformance.
 
 - **`code-generator`** (`agents/code-generator.md`)
-  Turns the planner's task list into production code, following the codebase's
+  Turns the SDD's task list into production code, following the codebase's
   own conventions, and verifies each step with the project's build, lint,
   typecheck, and format commands.
 
@@ -59,9 +62,11 @@ A team of subagents orchestrated by a main agent for hands-on software work.
 
 ### Standard pipeline
 
-`orchestrator` runs: plan (`planner`) → design review (`backend-designer` and/or
-`ui-designer`, by domain) → implement (`code-generator`) → test (`qa-tester`) →
-review (`code-style-reviewer`) → verify and report.
+`orchestrator` runs: SDD creation (`sdd-author`) → **human approval** → design
+review (`backend-designer` and/or `ui-designer`, by domain) → implement
+(`code-generator`) → test (`qa-tester`) → **human approval** → review
+(`code-style-reviewer`) → verify and report → **human approval** → SDD
+finalization (`sdd-author`).
 
 ## Dlocs case-study pipeline
 
