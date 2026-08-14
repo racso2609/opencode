@@ -12,12 +12,18 @@
     },
     "drive-local": {
       "type": "local",
-      "command": ["node", "/Users/racso/.config/opencode/drive-local/server.mjs"],
+      "command": [
+        "node",
+        "/Users/racso/.config/opencode/drive-local/server.mjs"
+      ],
       "enabled": true
     },
     "mcp-server-linkedin": {
       "type": "local",
-      "command": ["uvx", "mcp-server-linkedin@latest"]
+      "command": [
+        "uvx",
+        "mcp-server-linkedin@latest"
+      ]
     },
     "headroom": {
       "type": "local",
@@ -43,6 +49,24 @@
         "False"
       ],
       "enabled": true
+    },
+    "codegraph": {
+      "type": "local",
+      "command": [
+        "codegraph",
+        "serve",
+        "--mcp"
+      ],
+      "enabled": true
+    },
+    "engram": {
+      "type": "local",
+      "command": [
+        "/opt/homebrew/bin/engram",
+        "mcp",
+        "--tools=agent"
+      ],
+      "enabled": true
     }
   },
   "provider": {
@@ -53,5 +77,8 @@
         "baseURL": "http://127.0.0.1:8787/v1"
       }
     }
-  }
+  },
+  "plugin": [
+    "./plugins/caveman/plugin.js"
+  ]
 }
