@@ -8,9 +8,60 @@ Global [opencode](https://opencode.ai) configuration for this machine.
 | --- | --- |
 | `opencode.json` | Global config: MCP servers (`drive-local`, `headroom`, `serena`), provider setup. |
 | `AGENTS.md` | Session instructions (CodeGraph, RTK token-optimized commands). |
-| `agents/` | Custom subagents. |
+| `agents/` | Custom agents: the software delivery team plus the Dlocs case-study agents. |
 | `command/` | Custom slash commands. |
 | `drive-local/` | Local Google Drive MCP server (see its own README). |
+
+## Software delivery team
+
+A team of subagents orchestrated by a main agent for hands-on software work.
+
+### Main agent
+
+- **`orchestrator`** (`agents/orchestrator.md`) — primary mode
+  The accountable lead for a software task. It receives the request and
+  delegates planning, design review, implementation, testing, and code-style
+  review to the subagents, coordinating the pipeline and verifying results.
+  Selectable in the agent picker; optionally set as `default_agent` in
+  `opencode.json`.
+
+### Subagents
+
+- **`planner`** (`agents/planner.md`)
+  Breaks ambiguous feature requests and bug fixes into executable, prioritized
+  implementation plans: requirements, approach, task list with dependencies, and
+  per-task verification steps.
+
+- **`backend-designer`** (`agents/backend-designer.md`)
+  Designs backend architecture, data models, and API contracts against the
+  codebase's established conventions — service boundaries, migration safety,
+  error semantics, and security.
+
+- **`ui-designer`** (`agents/ui-designer.md`)
+  Guides UI and front-end work against a consistent design system — tokens,
+  components, layout, responsiveness, and WCAG accessibility — and reviews
+  existing interfaces for conformance.
+
+- **`code-generator`** (`agents/code-generator.md`)
+  Turns the planner's task list into production code, following the codebase's
+  own conventions, and verifies each step with the project's build, lint,
+  typecheck, and format commands.
+
+- **`qa-tester`** (`agents/qa-tester.md`)
+  Designs the test approach, writes and runs tests against the project's own
+  framework, and reports failures with reproduction detail instead of fixing
+  production code.
+
+- **`code-style-reviewer`** (`agents/code-style-reviewer.md`)
+  Final gate: checks the change against the project's own conventions, runs the
+  configured lint/typecheck/format commands, and flags maintainability and
+  security issues with file-and-line references.
+
+### Standard pipeline
+
+`orchestrator` runs: plan (`planner`) → design review (`backend-designer` and/or
+`ui-designer`, by domain) → implement (`code-generator`) → test (`qa-tester`) →
+review (`code-style-reviewer`) → verify and report.
 
 ## Dlocs case-study pipeline
 
