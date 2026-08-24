@@ -4,3 +4,5 @@ package-lock.json
 bun.lock
 .gitignore
 .DS_Store
+.caveman-active
+*.bak

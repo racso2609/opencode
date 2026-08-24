@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "default_agent": "orchestrator",
   "mcp": {
     "drive": {
       "type": "remote",
@@ -66,6 +67,18 @@
         "mcp",
         "--tools=agent"
       ],
+      "enabled": true
+    },
+    "trello": {
+      "type": "local",
+      "command": [
+        "bunx",
+        "@delorenj/mcp-server-trello"
+      ],
+      "environment": {
+        "TRELLO_API_KEY": "{env:TRELLO_API_KEY}",
+        "TRELLO_TOKEN": "{env:TRELLO_TOKEN}"
+      },
       "enabled": true
     }
   },

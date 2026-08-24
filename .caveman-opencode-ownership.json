@@ -23,15 +23,6 @@
     "commands/caveman-help.md": {
       "installedDigest": "72d1243a7dbae87137b13ca9b60a04f5801ca2a44abd27fbf158c6e0813939a6"
     },
-    "agents/cavecrew-investigator.md": {
-      "installedDigest": "9e1d02d5cda8400f6cb6fc0fd82478c529d8156e1dc2afffd91f15edaed51c19"
-    },
-    "agents/cavecrew-builder.md": {
-      "installedDigest": "176be5674bb6128ef231c8e7a389e7551866bc23c3f9d13a47b92d75ef10c2d3"
-    },
-    "agents/cavecrew-reviewer.md": {
-      "installedDigest": "22d4960951af252b1c2bf34ee85034ea03f690917145d2301fc8e5ede33fd1b7"
-    },
     "skills/caveman": {
       "installedDigest": "3e0eeab4ceaf509fc9ca471c1d6a260a8fd93f1f574323acbe2e4b18e6585ac1"
     },
@@ -49,9 +40,6 @@
     },
     "skills/caveman-compress": {
       "installedDigest": "0cf3f154d3db13a870f07d9d8f66a25977dc39ea9db4d198d2db0b79c33fcdf7"
-    },
-    "skills/cavecrew": {
-      "installedDigest": "c3a8e9dbbb45a7af35691e85b88e3a35c6d18da51ea37aacfcf56709829e1ec9"
     }
   }
 }

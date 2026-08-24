@@ -1,4 +1,4 @@
----
+let---
 description: Review staged diff and generate a terse commit message
 ---
 1. Inspect staged diff (`git diff --cached`).
