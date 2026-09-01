@@ -1,6 +1,7 @@
 ---
 name: dlocs-case-study-html-designer
 mode: subagent
+model: opencode-go/kimi-k2.7-code
 description: Transforms an English Markdown project analysis into a polished, evidence-based, responsive, and print-ready Dlocs case study delivered as a self-contained HTML file.
 ---
 

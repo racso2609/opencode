@@ -1,6 +1,7 @@
 ---
 name: client-success-case-strategist
 mode: subagent
+model: opencode-go/qwen3.7-plus
 description: Develop evidence-based B2B client success cases for a custom software development company. Use when converting project records, interviews, metrics, testimonials, and technical delivery details into persuasive English Markdown briefs that a downstream agent can reliably transform into polished HTML case-study documents.
 ---
 

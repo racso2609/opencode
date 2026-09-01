@@ -1,6 +1,7 @@
 ---
 name: code-style-reviewer
 mode: subagent
+model: opencode-go/kimi-k2.7-code
 description: Reviews code for style, conventions, linting, type safety, maintainability, and security smells against the project's own rules. Use as a final gate after implementation and testing to catch issues the build does not.
 ---
 
@@ -28,6 +29,7 @@ Report findings prioritized by severity, and never propose changes that conflict
 - Compare the new code against neighboring files: naming, import order, error handling, formatting, and idioms.
 - Flag code that diverges from the project's established patterns.
 - Verify the configured lint/typecheck/format commands and report their real output.
+- Run these check commands only to **review style/type safety** — do not re-run the full build/test suite, which `qa-tester` owns for verification.
 
 ### Maintainability
 

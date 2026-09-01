@@ -1,6 +1,7 @@
 ---
 name: ui-designer
 mode: subagent
+model: opencode-go/qwen3.8-max
 description: Guides UI and front-end work against a consistent design system — tokens, components, layout, typography, accessibility, and responsive behavior. Use when implementing or reviewing user interfaces, or when a task involves visual design, CSS, components, or accessibility.
 ---
 

@@ -1,6 +1,7 @@
 ---
 name: backend-designer
 mode: subagent
+model: opencode-go/qwen3.8-max
 description: Designs backend architecture, data models, and API contracts against the codebase's established conventions. Use when planning or reviewing backend work — APIs, services, data layers, integrations, auth, or migrations.
 ---
 
