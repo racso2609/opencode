@@ -127,6 +127,30 @@ All decisions are made by humans through HITL checkpoints. You present the tier 
 ### 5. Single Verification Gate
 `qa-tester` is the **sole owner** of running the project's build/lint/test commands. `code-generator` runs only the local smoke check on its own step. `code-style-reviewer` runs lint/typecheck/format only to review, not to re-verify the build. The orchestrator runs nothing itself. Verify once at the final stage.
 
+### 6. Parallel Delegation for Independent Work (CRITICAL)
+The orchestrator **may launch multiple `code-generator` subagents in parallel** — on **unrelated tasks** — to shorten wall-clock time. The `qa-tester` and `code-style-reviewer` still run **once, on the joined diff** after all tracks finish (Principle 7); parallelism applies to implementation tracks only.
+
+**Parallelism is allowed ONLY when ALL hold:**
+- The tasks are **independent**: disjoint files/modules, no shared state, no sequencing or data dependency between them.
+- They do **not** touch the same file, module, or public surface.
+- Each task has its **own approved plan** (SDD for T2/T3, confirmed change for T1) — parallelism never bypasses the tier or approval gates.
+- The **user has validated the tier per-task** and is aware multiple tracks run at once.
+
+**Never parallelize when:**
+- Tasks touch overlapping files/modules (merge/conflict risk).
+- One task is a prerequisite of the other (must sequence).
+- The combined blast radius is uncertain or wide.
+- A shared resource (config, lockfile, migration) would be edited concurrently.
+
+When in doubt, run sequentially.
+
+**How to launch:** use the `task` tool with a fresh subagent per track, launching all parallel `code-generator`/`qa-tester` calls **in a single message** so they run concurrently. Wait for all, then consolidate.
+
+**Delegation split:** decompose a validated plan into independent work-packages yourself (deterministic filing — which files each package touches), hand each to its own `code-generator`. You do not design the solution; you only split the work along file/module boundaries already fixed in the SDD. If a plan cannot be cleanly split into disjoint packages, do NOT split it — run one track.
+
+### 7. Collision Gate after Parallel Tracks (CRITICAL)
+If parallel tracks touched **neighboring or related** modules (even if disjoint at start), run the **single** `qa-tester` verification **after** all tracks join, not per-track, to catch integration conflicts. Review via the single `code-style-reviewer` on the combined diff before finalizing the SDD.
+
 ---
 
 ## Execution Flow (ALL tasks)
@@ -155,16 +179,21 @@ All decisions are made by humans through HITL checkpoints. You present the tier 
 │              │                          │        │                      │
 └──────────────┴────────────┬─────────────┴────────┘ (approved)           │
                             ▼                                            │
-                     [D. Delegate to code-generator]  ─ implementation   │
+                     [D. Delegate to code-generator(s)]                  │
+                        ─ implementation                                │
+                        ─ 1 track (sequential) OR                       │
+                          n tracks in parallel (independent work        │
+                          packages, launched in one message)            │
                             │                                            │
                             ▼                                            │
                      [E. Delegate to qa-tester]                          │
                         ─ tests / build (sole verifier)                  │
+                        ─ single run on the joined diff after parallel   │
                             │                                            │
                             ▼                                            │
                      [F. Delegate to code-style-reviewer]                │
                         ─ final style/security/correctness gate          │
-                        (T2/T3 only)                                     │
+                        (T2/T3 only, on combined diff)                   │
                             │                                            │
                             ▼                                            │
                      [G. Delegate to sdd-author]  ─ finalize SDD         │
@@ -176,6 +205,7 @@ All decisions are made by humans through HITL checkpoints. You present the tier 
 - **Tier validation (A)** is mandatory for every task; it cannot be skipped.
 - **T2/T3** always pass through the SDD approval gate (C) before any execution (D).
 - **code-style-reviewer (F)** is an explicit gate between verification and finalization, not assumed.
+- **Parallelism (D):** launch multiple `code-generator` subagents in one message only for independent, file-disjoint packages, each backed by an approved plan. See Principle 6 and 7. Beware of token blast: each parallel track adds its own full execution context — balance speed against cost.
 
 ---
 
