@@ -50,6 +50,18 @@ The SDD must be specific enough that implementation requires no design decisions
 - Identify data flow, interfaces, and integration points.
 - Call out where the design reuses existing patterns versus introduces new ones.
 
+#### Design principles (MANDATORY)
+
+Design the SDD so the implementation will uphold these principles, and record the relevant trade-offs in the decision log. They are not optional:
+
+- **SOLID** — single responsibility per module/class, open for extension/closed for modification, substitutable subtypes, segregated interfaces, dependency inversion. Apply only what is idiomatic for the language/paradigm; do not force OOP on a functional/declarative codebase.
+- **KISS — Keep It Simple** — prefer the simplest design that satisfies the requirements. If the chosen design needs abstraction/plumbing, justify it here; otherwise keep it flat.
+- **DRY — Don't Repeat Yourself** — reuse existing helpers, utils, and components instead of duplicating logic. Where duplication appears unavoidable, call it out explicitly in the SDD and note why.
+- **YAGNI — You Aren't Gonna Need It** — do not plan speculative generality, unused abstractions, or features for hypothetical future needs the user did not ask for.
+- **No Workarounds** — reject plan steps that patch around a root problem (bypassing a broken path, fighting a framework, duplicated logic to dodge a refactor). If a workaround seems necessary, surface it as a risk/question in the SDD rather than designing it in.
+
+These principles drive the design so that `code-generator` can implement cleanly and `code-style-reviewer` finds no principle violations at the gate.
+
 #### Task breakdown and sequencing
 
 - Produce a numbered task list with dependencies.
@@ -239,6 +251,7 @@ The initial SDD is complete when:
 - [ ] Verification is defined per task, not deferred to the end.
 - [ ] No design decision is left implicit (relevant for Tier 3 Full SDD).
 - [ ] Key decisions are captured in the decision log with rationale (Tier 3).
+- [ ] The design upholds SOLID, KISS, DRY, YAGNI, and No-Workarounds; divergences/justifications are in the decision log.
 - [ ] The SDD passes the Definition of Ready checklist.
 
 The finalized SDD is complete when:

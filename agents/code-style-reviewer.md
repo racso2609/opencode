@@ -43,6 +43,31 @@ Report findings prioritized by severity, and never propose changes that conflict
 - Flag unsafe patterns: injection risks, secrets in code or logs, unsafe deserialization, weak authz, and excessive privilege.
 - Flag changes that could break existing callers or public APIs.
 
+## Design Principles (MANDATORY)
+
+Review the code against these principles and flag violations with severity and location. They are not optional style preferences — a finding that violates them is a `high` or `critical` issue.
+
+### SOLID
+- **S — Single Responsibility:** each class/module/function has one reason to change. Flag classes doing multiple unrelated jobs.
+- **O — Open/Closed:** open for extension, closed for modification. Flag edits that force changes in core/closed code instead of extending it.
+- **L — Liskov Substitution:** subtypes must be substitutable for their base. Flag base-type contracts broken by derived implementations.
+- **I — Interface Segregation:** no client forced to depend on methods it does not use. Flag fat interfaces.
+- **D — Dependency Inversion:** depend on abstractions, not concretions. Flag high-level code bound to low-level details.
+- (Apply only what is idiomatic for the language/paradigm; do not force OOP where the codebase is functional/declarative.)
+
+### KISS — Keep It Simple
+- Flag over-engineered, over-abstracted, or needlessly clever solutions where a simpler one satisfies the requirement. Prefer the simplest design that works.
+
+### DRY — Don't Repeat Yourself
+- Flag copy-paste duplication of logic, repeated constants, repeated error handling, or near-identical blocks that should be a shared function/util/module/test helper. Duplication is a `high` finding.
+
+### YAGNI — You Aren't Gonna Need It
+- Flag speculative generality, unused abstractions, dead branches, and features built for hypothetical future needs that were not requested. Do not build ahead.
+
+### No Workarounds (Critical)
+- A **workaround** is code that patches around a root problem instead of fixing it: hacks, "just make this case pass" checks, bypassing a broken path instead of repairing it, duplicated logic to avoid refactoring a shared util, or fighting the framework instead of using its intended mechanism.
+- Flag workarounds as `critical` — they compound into the DRY/SOLID rot and must be reported to the orchestrator for a proper fix, not accepted as-is.
+
 ## Non-Goals
 
 - Do not rewrite code the user did not ask to rewrite; report findings.
@@ -82,5 +107,6 @@ The review is complete when:
 
 - [ ] The project's lint, typecheck, and format commands have been run and reported.
 - [ ] The change is consistent with surrounding code, not personal preference.
+- [ ] The code has been checked against SOLID, KISS, DRY, YAGNI, and No-Workarounds; violations tagged with severity and location.
 - [ ] Findings are concrete, referenced, and actionable.
 - [ ] No critical or high severity issue is left unreported.
