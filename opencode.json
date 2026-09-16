@@ -15,7 +15,7 @@
       "type": "local",
       "command": [
         "node",
-        "/Users/racso/.config/opencode/drive-local/server.mjs"
+        "/Users/racso/.agents/mcp/drive-local/server.mjs"
       ],
       "enabled": true
     },
@@ -25,31 +25,6 @@
         "uvx",
         "mcp-server-linkedin@latest"
       ]
-    },
-    "headroom": {
-      "type": "local",
-      "command": [
-        "/Users/racso/.pyenv/versions/3.10.20/bin/headroom",
-        "mcp",
-        "serve"
-      ],
-      "enabled": true
-    },
-    "serena": {
-      "type": "local",
-      "command": [
-        "uvx",
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server",
-        "--project-from-cwd",
-        "--context",
-        "opencode",
-        "--open-web-dashboard",
-        "False"
-      ],
-      "enabled": true
     },
     "codegraph": {
       "type": "local",
@@ -80,15 +55,6 @@
         "TRELLO_TOKEN": "{env:TRELLO_TOKEN}"
       },
       "enabled": true
-    }
-  },
-  "provider": {
-    "headroom": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Headroom Proxy",
-      "options": {
-        "baseURL": "http://127.0.0.1:8787/v1"
-      }
     }
   },
   "plugin": [
