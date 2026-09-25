@@ -6,3 +6,5 @@ bun.lock
 .DS_Store
 .caveman-active
 *.bak
+# local config with API key (never commit)
+opencode.json

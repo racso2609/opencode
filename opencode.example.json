@@ -1,0 +1,96 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "racsito-headless",
+  "mcp": {
+    "drive": {
+      "type": "remote",
+      "url": "https://drivemcp.googleapis.com/mcp/v1",
+      "oauth": {
+        "clientId": "{env:GOOGLE_DRIVE_MCP_CLIENT_ID}",
+        "clientSecret": "{env:GOOGLE_DRIVE_MCP_CLIENT_SECRET}"
+      },
+      "enabled": false
+    },
+    "drive-local": {
+      "type": "local",
+      "command": [
+        "node",
+        "/Users/racso/.agents/mcp/drive-local/server.mjs"
+      ],
+      "enabled": false,
+      "disabledReason": "host: binario/ruta ausente en racsolab (2026-09-24)"
+    },
+    "mcp-server-linkedin": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-server-linkedin@latest"
+      ],
+      "enabled": false,
+      "disabledReason": "host: binario/ruta ausente en racsolab (2026-09-24)"
+    },
+    "codegraph": {
+      "type": "local",
+      "command": [
+        "codegraph",
+        "serve",
+        "--mcp"
+      ],
+      "enabled": false,
+      "disabledReason": "host: binario/ruta ausente en racsolab (2026-09-24)"
+    },
+    "engram": {
+      "type": "local",
+      "command": [
+        "/opt/homebrew/bin/engram",
+        "mcp",
+        "--tools=agent"
+      ],
+      "enabled": false,
+      "disabledReason": "host: binario/ruta ausente en racsolab (2026-09-24)"
+    },
+    "trello": {
+      "type": "local",
+      "command": [
+        "bunx",
+        "@delorenj/mcp-server-trello"
+      ],
+      "environment": {
+        "TRELLO_API_KEY": "{env:TRELLO_API_KEY}",
+        "TRELLO_TOKEN": "{env:TRELLO_TOKEN}"
+      },
+      "enabled": false,
+      "disabledReason": "host: binario/ruta ausente en racsolab (2026-09-24)"
+    }
+  },
+  "plugin": [
+    "./plugins/caveman/plugin.js"
+  ],
+  "provider": {
+    "cheaperinference": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "CheaperInference",
+      "options": {
+        "baseURL": "https://api.cheaperinference.com/v1",
+        "apiKey": "<CHEAPERINFERENCE_API_KEY>"
+      },
+      "models": {
+        "glm-5.3-flash": {
+          "name": "GLM 5.3 Flash",
+          "limit": {
+            "context": 128000,
+            "output": 4096
+          }
+        },
+        "qwen-3-8-27b": {
+          "name": "Qwen3 8 27B",
+          "limit": {
+            "context": 128000,
+            "output": 4096
+          }
+        }
+      }
+    }
+  },
+  "model": "opencode-go/qwen3.7-plus"
+}
